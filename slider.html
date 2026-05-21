@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+<title>Slider Noticias</title>
+
+<style>
+
+body{
+    margin:0;
+    padding:0;
+    overflow:hidden;
+    background:white;
+}
+
+.slider{
+    position:relative;
+    width:100%;
+    height:300px;
+    overflow:hidden;
+}
+
+.slide{
+    position:absolute;
+    width:100%;
+    height:300px;
+    object-fit:cover;
+
+    opacity:0;
+
+    animation:fade 12s infinite;
+}
+
+/* Imagen 1 */
+.slide:nth-child(1){
+    animation-delay:0s;
+}
+
+/* Imagen 2 */
+.slide:nth-child(2){
+    animation-delay:4s;
+}
+
+/* Imagen 3 */
+.slide:nth-child(3){
+    animation-delay:8s;
+}
+
+@keyframes fade{
+
+    0%{
+        opacity:0;
+    }
+
+    8%{
+        opacity:1;
+    }
+
+    30%{
+        opacity:1;
+    }
+
+    38%{
+        opacity:0;
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="slider">
+
+    <!-- SLIDE 1 -->
+    <a href="https://google.es" target="_blank">
+        <img 
+            class="slide"
+            src="https://picsum.photos/id/1015/1200/300"
+            alt="Noticia 1">
+    </a>
+
+    <!-- SLIDE 2 -->
+    <a href="https://microsoft.com" target="_blank">
+        <img 
+            class="slide"
+            src="https://picsum.photos/id/1016/1200/300"
+            alt="Noticia 2">
+    </a>
+
+    <!-- SLIDE 3 -->
+    <a href="https://openai.com" target="_blank">
+        <img 
+            class="slide"
+            src="https://picsum.photos/id/1018/1200/300"
+            alt="Noticia 3">
+    </a>
+
+</div>
+
+</body>
+</html>
