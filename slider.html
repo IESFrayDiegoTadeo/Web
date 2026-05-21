@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 
@@ -10,64 +11,90 @@
 body{
     margin:0;
     padding:0;
-    overflow:hidden;
     background:white;
+    font-family:Arial;
 }
 
 .slider{
     position:relative;
     width:100%;
+    max-width:1200px;
     height:300px;
+    margin:auto;
     overflow:hidden;
 }
+
+/* Slides */
 
 .slide{
     position:absolute;
     width:100%;
-    height:300px;
-    object-fit:cover;
-
+    height:100%;
     opacity:0;
-
-    animation:fade 12s infinite;
+    transition:opacity 0.5s ease;
 }
 
-/* Imagen 1 */
-.slide:nth-child(1){
-    animation-delay:0s;
+.slide.active{
+    opacity:1;
+    z-index:1;
 }
 
-/* Imagen 2 */
-.slide:nth-child(2){
-    animation-delay:4s;
+.slide img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
-/* Imagen 3 */
-.slide:nth-child(3){
-    animation-delay:8s;
+/* Flechas */
+
+.arrow{
+    position:absolute;
+    top:50%;
+    transform:translateY(-50%);
+    background:rgba(0,0,0,0.5);
+    color:white;
+    border:none;
+    font-size:30px;
+    width:50px;
+    height:50px;
+    cursor:pointer;
+    z-index:2;
 }
 
-@keyframes fade{
+.arrow:hover{
+    background:rgba(0,0,0,0.8);
+}
 
-    0%{
-        opacity:0;
-    }
+.prev{
+    left:10px;
+}
 
-    8%{
-        opacity:1;
-    }
+.next{
+    right:10px;
+}
 
-    30%{
-        opacity:1;
-    }
+/* Puntos */
 
-    38%{
-        opacity:0;
-    }
+.dots{
+    position:absolute;
+    bottom:15px;
+    width:100%;
+    text-align:center;
+    z-index:2;
+}
 
-    100%{
-        opacity:0;
-    }
+.dot{
+    display:inline-block;
+    width:14px;
+    height:14px;
+    margin:0 5px;
+    background:rgba(255,255,255,0.5);
+    border-radius:50%;
+    cursor:pointer;
+}
+
+.dot.active{
+    background:white;
 }
 
 </style>
@@ -79,30 +106,118 @@ body{
 <div class="slider">
 
     <!-- SLIDE 1 -->
-    <a href="https://google.es" target="_blank">
-        <img 
-            class="slide"
-            src="https://picsum.photos/id/1015/1200/300"
-            alt="Noticia 1">
+    <a class="slide active" href="https://google.es" target="_blank">
+        <img src="https://picsum.photos/id/1015/1200/300">
     </a>
 
     <!-- SLIDE 2 -->
-    <a href="https://microsoft.com" target="_blank">
-        <img 
-            class="slide"
-            src="https://picsum.photos/id/1016/1200/300"
-            alt="Noticia 2">
+    <a class="slide" href="https://microsoft.com" target="_blank">
+        <img src="https://picsum.photos/id/1016/1200/300">
     </a>
 
     <!-- SLIDE 3 -->
-    <a href="https://openai.com" target="_blank">
-        <img 
-            class="slide"
-            src="https://picsum.photos/id/1018/1200/300"
-            alt="Noticia 3">
+    <a class="slide" href="https://openai.com" target="_blank">
+        <img src="https://picsum.photos/id/1018/1200/300">
     </a>
 
+    <!-- Flechas -->
+    <button class="arrow prev">&#10094;</button>
+    <button class="arrow next">&#10095;</button>
+
+    <!-- Puntos -->
+    <div class="dots">
+        <span class="dot active"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+    </div>
+
 </div>
+
+<script>
+
+const slides = document.querySelectorAll('.slide');
+const dots = document.querySelectorAll('.dot');
+
+const prev = document.querySelector('.prev');
+const next = document.querySelector('.next');
+
+let current = 0;
+let interval;
+
+function showSlide(index){
+
+    slides.forEach(slide => slide.classList.remove('active'));
+    dots.forEach(dot => dot.classList.remove('active'));
+
+    slides[index].classList.add('active');
+    dots[index].classList.add('active');
+
+    current = index;
+}
+
+function nextSlide(){
+
+    current++;
+
+    if(current >= slides.length){
+        current = 0;
+    }
+
+    showSlide(current);
+}
+
+function prevSlide(){
+
+    current--;
+
+    if(current < 0){
+        current = slides.length - 1;
+    }
+
+    showSlide(current);
+}
+
+next.addEventListener('click', () => {
+
+    nextSlide();
+    resetInterval();
+
+});
+
+prev.addEventListener('click', () => {
+
+    prevSlide();
+    resetInterval();
+
+});
+
+dots.forEach((dot, index) => {
+
+    dot.addEventListener('click', () => {
+
+        showSlide(index);
+        resetInterval();
+
+    });
+
+});
+
+function startInterval(){
+
+    interval = setInterval(nextSlide, 4000);
+
+}
+
+function resetInterval(){
+
+    clearInterval(interval);
+    startInterval();
+
+}
+
+startInterval();
+
+</script>
 
 </body>
 </html>
