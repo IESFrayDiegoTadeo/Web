@@ -2,222 +2,223 @@
 <html lang="es">
 
 <head>
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Slider Noticias</title>
+    <title>Slider Noticias</title>
 
-<style>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: white;
+            font-family: Arial;
+        }
 
-body{
-    margin:0;
-    padding:0;
-    background:white;
-    font-family:Arial;
-}
+        .slider {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 300px;
+            margin: auto;
+            overflow: hidden;
+        }
 
-.slider{
-    position:relative;
-    width:100%;
-    max-width:1200px;
-    height:300px;
-    margin:auto;
-    overflow:hidden;
-}
+        /* Slides */
 
-/* Slides */
+        .slide {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
 
-.slide{
-    position:absolute;
-    width:100%;
-    height:100%;
-    opacity:0;
-    transition:opacity 0.5s ease;
-}
+        .slide.active {
+            opacity: 1;
+            z-index: 1;
+        }
 
-.slide.active{
-    opacity:1;
-    z-index:1;
-}
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-.slide img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
+        /* Flechas */
 
-/* Flechas */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            font-size: 30px;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            z-index: 2;
+        }
 
-.arrow{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    background:rgba(0,0,0,0.5);
-    color:white;
-    border:none;
-    font-size:30px;
-    width:50px;
-    height:50px;
-    cursor:pointer;
-    z-index:2;
-}
+        .arrow:hover {
+            background: rgba(0, 0, 0, 0.8);
+        }
 
-.arrow:hover{
-    background:rgba(0,0,0,0.8);
-}
+        .prev {
+            left: 10px;
+        }
 
-.prev{
-    left:10px;
-}
+        .next {
+            right: 10px;
+        }
 
-.next{
-    right:10px;
-}
+        /* Puntos */
 
-/* Puntos */
+        .dots {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+            z-index: 2;
+        }
 
-.dots{
-    position:absolute;
-    bottom:15px;
-    width:100%;
-    text-align:center;
-    z-index:2;
-}
+        .dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            margin: 0 5px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
 
-.dot{
-    display:inline-block;
-    width:14px;
-    height:14px;
-    margin:0 5px;
-    background:rgba(255,255,255,0.5);
-    border-radius:50%;
-    cursor:pointer;
-}
-
-.dot.active{
-    background:white;
-}
-
-</style>
+        .dot.active {
+            background: white;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="slider">
+    <div class="slider">
 
-    <!-- SLIDE 1 -->
-    <a class="slide active" href="https://google.es" target="_blank">
-        <img src="https://picsum.photos/id/1015/1200/300">
-    </a>
+        <!-- SLIDE 1 -->
+        <a class="slide active"
+            href="http://iesfraydiegotadeo.centros.educa.jcyl.es/sitio/index.cgi?wid_seccion=59&wid_item=292"
+            target="_blank">
+            <img src="slider_principal\pictures\Convocatoria 1a eval final.png">
+        </a>
 
-    <!-- SLIDE 2 -->
-    <a class="slide" href="https://microsoft.com" target="_blank">
-        <img src="https://picsum.photos/id/1016/1200/300">
-    </a>
+        <!-- SLIDE 2 -->
+        <a class="slide" href="https://microsoft.com" target="_blank">
+            <img src="https://picsum.photos/id/1016/1200/300">
+        </a>
 
-    <!-- SLIDE 3 -->
-    <a class="slide" href="https://openai.com" target="_blank">
-        <img src="https://picsum.photos/id/1018/1200/300">
-    </a>
+        <!-- SLIDE 3 -->
+        <a class="slide" href="https://openai.com" target="_blank">
+            <img src="https://picsum.photos/id/1018/1200/300">
+        </a>
 
-    <!-- Flechas -->
-    <button class="arrow prev">&#10094;</button>
-    <button class="arrow next">&#10095;</button>
+        <!-- Flechas -->
+        <button class="arrow prev">&#10094;</button>
+        <button class="arrow next">&#10095;</button>
 
-    <!-- Puntos -->
-    <div class="dots">
-        <span class="dot active"></span>
-        <span class="dot"></span>
-        <span class="dot"></span>
+        <!-- Puntos -->
+        <div class="dots">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+
     </div>
 
-</div>
+    <script>
 
-<script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
 
-const slides = document.querySelectorAll('.slide');
-const dots = document.querySelectorAll('.dot');
+        const prev = document.querySelector('.prev');
+        const next = document.querySelector('.next');
 
-const prev = document.querySelector('.prev');
-const next = document.querySelector('.next');
+        let current = 0;
+        let interval;
 
-let current = 0;
-let interval;
+        function showSlide(index) {
 
-function showSlide(index){
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
 
-    slides.forEach(slide => slide.classList.remove('active'));
-    dots.forEach(dot => dot.classList.remove('active'));
+            slides[index].classList.add('active');
+            dots[index].classList.add('active');
 
-    slides[index].classList.add('active');
-    dots[index].classList.add('active');
+            current = index;
+        }
 
-    current = index;
-}
+        function nextSlide() {
 
-function nextSlide(){
+            current++;
 
-    current++;
+            if (current >= slides.length) {
+                current = 0;
+            }
 
-    if(current >= slides.length){
-        current = 0;
-    }
+            showSlide(current);
+        }
 
-    showSlide(current);
-}
+        function prevSlide() {
 
-function prevSlide(){
+            current--;
 
-    current--;
+            if (current < 0) {
+                current = slides.length - 1;
+            }
 
-    if(current < 0){
-        current = slides.length - 1;
-    }
+            showSlide(current);
+        }
 
-    showSlide(current);
-}
+        next.addEventListener('click', () => {
 
-next.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
 
-    nextSlide();
-    resetInterval();
+        });
 
-});
+        prev.addEventListener('click', () => {
 
-prev.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
 
-    prevSlide();
-    resetInterval();
+        });
 
-});
+        dots.forEach((dot, index) => {
 
-dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
 
-    dot.addEventListener('click', () => {
+                showSlide(index);
+                resetInterval();
 
-        showSlide(index);
-        resetInterval();
+            });
 
-    });
+        });
 
-});
+        function startInterval() {
 
-function startInterval(){
+            interval = setInterval(nextSlide, 4000);
 
-    interval = setInterval(nextSlide, 4000);
+        }
 
-}
+        function resetInterval() {
 
-function resetInterval(){
+            clearInterval(interval);
+            startInterval();
 
-    clearInterval(interval);
-    startInterval();
+        }
 
-}
+        startInterval();
 
-startInterval();
-
-</script>
+    </script>
 
 </body>
+
 </html>
