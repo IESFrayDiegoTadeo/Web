@@ -181,6 +181,7 @@
         const prev = document.querySelector('.prev');
         const next = document.querySelector('.next');
 
+        let duracion = 5000;
         let current = 0;
         let interval;
 
@@ -244,7 +245,7 @@
 
         function startInterval() {
 
-            interval = setInterval(nextSlide, 4000);
+            interval = setInterval(nextSlide, duracion);
 
         }
 
