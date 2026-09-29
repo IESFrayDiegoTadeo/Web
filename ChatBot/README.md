@@ -1,73 +1,118 @@
 # Chatbot del IES Fray Diego Tadeo González
 
-Chatbot estático para alojar en GitHub Pages e incrustar posteriormente en la web del centro mediante `iframe`.
+Chatbot estático para GitHub Pages e integración mediante `iframe`.
 
-## Características
+## Versión actual
 
-- HTML, CSS y JavaScript puro.
-- No utiliza ChatGPT, Gemini ni ninguna API externa.
-- No requiere servidor ni base de datos.
-- Respuestas 100 % preprogramadas.
-- Permite escribir preguntas en texto libre.
-- Usa palabras clave para localizar la respuesta adecuada.
-- Incluye botones de preguntas frecuentes.
-- Responsive para ordenador y móvil.
-- Preparado para mostrarse dentro de un `iframe`.
+Esta versión funciona sin IA generativa y añade un sistema de conversación guiada:
 
-## Archivos
+- respuestas 100 % preprogramadas;
+- búsqueda por tema y palabras clave;
+- conceptos generales (`horario`, `acceso`, `credenciales`, `ayuda`...);
+- contexto conversacional;
+- desambiguación mediante botones;
+- categorías para navegar cuando la consulta no se reconoce;
+- respuestas contextuales a preguntas breves.
 
-- `index.html`: interfaz principal.
-- `css/style.css`: estilos visuales.
-- `js/chatbot.js`: motor del chatbot.
-- `data/respuestas.js`: base de conocimiento editable.
+### Ejemplo
 
-## Añadir respuestas
+Si el usuario escribe:
 
-Edita `data/respuestas.js`.
+`recreos`
 
-Cada respuesta tiene esta estructura:
+el chatbot responde sobre los Recreos TIC y guarda ese tema como contexto.
+
+Si después escribe:
+
+`horas`
+
+el sistema interpreta que pregunta por **el horario de los Recreos TIC**, en lugar de buscar la palabra "horas" de forma aislada.
+
+Si el usuario escribe `horas` al comenzar una conversación, el sistema no presupone el tema: muestra las opciones relacionadas con horarios.
+
+---
+
+## Archivos principales
+
+### `data/respuestas.js`
+
+Es el archivo que normalmente tendrás que modificar para añadir contenido.
+
+Contiene:
+
+- `CONFIG_CHATBOT`
+- `CONCEPTOS`
+- `CATEGORIAS`
+- `RESPUESTAS`
+
+Cada respuesta puede indicar:
 
 ```javascript
 {
-  id: "identificador-unico",
-  pregunta: "Texto que aparecerá en los botones",
-  palabrasClave: [
-    "palabra o frase",
-    "otra palabra"
+  id: "recreos-tic",
+  pregunta: "¿Cuándo son los Recreos TIC?",
+  categoria: "tic",
+
+  temas: [
+    "recreos tic",
+    "recreos"
   ],
-  respuesta:
-    "Texto de la respuesta. Puede contener HTML sencillo.",
+
+  palabrasClave: [
+    "horario recreos tic"
+  ],
+
+  conceptos: [
+    "horario",
+    "ayuda"
+  ],
+
+  respuesta: "Respuesta principal",
+
+  respuestasContextuales: {
+    horario: "Respuesta específica para una pregunta posterior sobre horarios"
+  },
+
   sugerencias: [
-    "id-de-otra-respuesta"
+    "problemas-educacyl"
   ]
 }
 ```
 
-## Publicación en GitHub Pages
+### `js/chatbot.js`
 
-Sube la carpeta completa al repositorio que utilices para GitHub Pages.
+Contiene el motor de conversación.
 
-Si la carpeta publicada se llama `chatbot`, la dirección normalmente tendrá una forma similar a:
+El orden de búsqueda es:
 
-`https://USUARIO.github.io/REPOSITORIO/chatbot/`
+1. contexto de la conversación;
+2. coincidencia directa;
+3. conceptos generales;
+4. sugerencias por proximidad;
+5. navegación por categorías.
 
-o, según cómo esté configurado el repositorio:
+Normalmente no es necesario modificarlo al añadir nuevas preguntas.
 
-`https://USUARIO.github.io/chatbot/`
+---
 
-## Ejemplo de iframe para Educacyl
+## Publicación
+
+Sube la carpeta completa a GitHub Pages.
+
+Ejemplo:
 
 ```html
 <iframe
-  src="URL_DE_GITHUB_PAGES"
+  src="https://iesfraydiegotadeo.github.io/slider/chatbot-ies-fray-diego/"
   width="100%"
   height="720"
   frameborder="0"
-  loading="lazy"
-  title="Asistente virtual del IES">
+  scrolling="yes"
+  title="Asistente virtual del IES Fray Diego Tadeo González">
 </iframe>
 ```
 
-## Nota
+## Archivos que no cambian en esta versión
 
-El archivo `data/respuestas.js` contiene únicamente dos respuestas de prueba.
+- `index.html`
+- `css/style.css`
