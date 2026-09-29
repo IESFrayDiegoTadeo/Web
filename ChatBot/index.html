@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Asistente virtual del IES Fray Diego Tadeo González">
+  <title>Asistente del IES Fray Diego Tadeo González</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <main class="chat-shell" aria-label="Asistente virtual del instituto">
+    <section class="chat-card">
+      <header class="chat-header">
+        <div class="bot-avatar" aria-hidden="true">💬</div>
+        <div>
+          <h1>Asistente del IES</h1>
+          <p>IES Fray Diego Tadeo González</p>
+        </div>
+      </header>
+
+      <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+
+      <div id="quickActions" class="quick-actions" aria-label="Preguntas frecuentes"></div>
+
+      <form id="chatForm" class="chat-form" autocomplete="off">
+        <label class="sr-only" for="userInput">Escribe tu pregunta</label>
+        <input
+          id="userInput"
+          type="text"
+          maxlength="250"
+          placeholder="Escribe tu pregunta..."
+          aria-label="Escribe tu pregunta"
+        >
+        <button type="submit" aria-label="Enviar pregunta">Enviar</button>
+      </form>
+
+      <footer class="chat-footer">
+        <span>Información preprogramada del centro. El asistente no utiliza IA generativa.</span>
+      </footer>
+    </section>
+  </main>
+
+  <script src="data/respuestas.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>
