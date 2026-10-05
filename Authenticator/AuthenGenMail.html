@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Solicitud de reseteo de Authenticator</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        padding: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f5f8fc;
+        color: #14213d;
+    }
+
+    .formulario {
+        max-width: 650px;
+        margin: 0 auto;
+        padding: 25px;
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+    }
+
+    h2 {
+        margin-top: 0;
+        color: #0645ad;
+    }
+
+    .descripcion {
+        color: #555;
+        line-height: 1.5;
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        margin-top: 18px;
+        margin-bottom: 6px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #bbb;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    input:focus {
+        outline: 2px solid #1e73d8;
+        border-color: #1e73d8;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 25px;
+        padding: 14px;
+        border: 0;
+        border-radius: 7px;
+        background: #086bd6;
+        color: white;
+        font-size: 17px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #0557af;
+    }
+
+    .aviso {
+        margin-top: 18px;
+        padding: 12px;
+        background: #eef6ff;
+        border-left: 4px solid #086bd6;
+        font-size: 14px;
+        line-height: 1.4;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="formulario">
+
+    <h2>🔐 Reseteo de Microsoft Authenticator</h2>
+
+    <p class="descripcion">
+        Si has perdido el acceso a Microsoft Authenticator, puedes utilizar
+        este formulario para preparar una solicitud de reseteo al soporte
+        de EducaCyL.
+    </p>
+
+    <label for="nombre">Nombre y apellidos</label>
+    <input
+        type="text"
+        id="nombre"
+        placeholder="Ej.: Juan García López"
+        required
+    >
+
+    <label for="correo">Correo EducaCyL</label>
+    <input
+        type="email"
+        id="correo"
+        placeholder="Ej.: usuario@educa.jcyl.es"
+        required
+    >
+
+    <button type="button" onclick="generarCorreo()">
+        ✉️ Generar correo
+    </button>
+
+    <div class="aviso">
+        Al pulsar el botón se abrirá tu aplicación de correo electrónico.
+        Revisa el mensaje antes de enviarlo.
+    </div>
+
+</div>
+
+
+<script>
+
+function generarCorreo() {
+
+    const nombre = document.getElementById("nombre").value.trim();
+    const correo = document.getElementById("correo").value.trim();
+
+    if (!nombre || !correo) {
+        alert("Introduce tu nombre y tu correo EducaCyL.");
+        return;
+    }
+
+    const destinatario = "soporte.2fa@educa.jcyl.es";
+
+    const asunto = "Reseteo de Authenticator";
+
+    const mensaje =
+`Buenas,
+
+Soy ${nombre}, necesito que se resetee mi cuenta de Authenticator. Mi correo es ${correo}.
+
+Muchas gracias por su ayuda.
+
+Un saludo.`;
+
+    const mailto =
+        "mailto:" + destinatario +
+        "?subject=" + encodeURIComponent(asunto) +
+        "&body=" + encodeURIComponent(mensaje);
+
+    window.location.href = mailto;
+}
+
+</script>
+
+</body>
+</html>
