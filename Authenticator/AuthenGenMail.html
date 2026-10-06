@@ -86,7 +86,26 @@
     }
 </style>
 </head>
+<script>
+function enviarAltura() {
+    const altura = document.documentElement.scrollHeight;
 
+    window.parent.postMessage({
+        tipo: "ajustarAlturaAuthenticator",
+        altura: altura
+    }, "*");
+}
+
+// Al terminar de cargar
+window.addEventListener("load", enviarAltura);
+
+// Si cambia el tamaño de la página
+window.addEventListener("resize", enviarAltura);
+
+// Detectar cambios en el contenido
+const observer = new ResizeObserver(enviarAltura);
+observer.observe(document.documentElement);
+</script>
 <body>
 
 <div class="formulario">
